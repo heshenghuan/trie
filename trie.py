@@ -5,6 +5,8 @@ Created on Wed Aug 05 09:41:06 2015
 @author: heshenghuan
 """
 
+import codecs
+
 class TrieNode(object):
     def __init__(self):
         self.is_word = False
@@ -43,17 +45,25 @@ class Trie(object):
             return True
         else:
             return False
+    
+    def readDict(self, dictfile):
+        print "Loading dict data and building Trie Tree",
+        input_data = codecs.open(dictfile, 'r', 'utf-8')
+        entry_num = 0
+        for line in input_data.readlines():
+            rawText = line.strip()
+            if rawText == '':
+                continue
+            else:
+                entry_num += 1
+            if entry_num%1000 == 0 and entry_num !=0:
+                print '.',
+            word = rawText.split()[0]      #remove the space
+            #length = len(word)
+            self.addstr(word)
+        print "\nLoading Corpus done."
             
 if __name__ == '__main__':
     trie = Trie()
-    trie.addstr(u"产科")
-    trie.addstr(u"BBC")
-    trie.addstr(u"专访")
-    trie.addstr(u"非机动车")
-    trie.addstr(u"非机动车道")
-    print trie.search(u"BBC")
-    print trie.search(u"非机动车道")
-    print trie.search(u"非机动车")
-    print trie.search(u"非机动")
-    trie.addstr(u"非机动")
-    print trie.search(u"非机动")
+    trie.readDict(r'dictionary.txt')
+    print trie.search(u"埃博拉")
