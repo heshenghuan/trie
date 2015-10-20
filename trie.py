@@ -15,6 +15,7 @@ class TrieNode(object):
 class Trie(object):
     def __init__(self):
         self.root = TrieNode()
+        self.maxl = 0
         
     def addstr(self, s):
         """Add a string to this trie"""
@@ -53,7 +54,7 @@ class Trie(object):
         print "Loading dict data and building Trie Tree."
         input_data = codecs.open(dictfile, 'r', 'utf-8')
         entry_num = 0
-        maxl = 0
+        self.maxl = 0
         for line in input_data.readlines():
             rawText = line.strip()
             if rawText == '':
@@ -64,9 +65,9 @@ class Trie(object):
                 #print '.',
             word = rawText.split()[0]      #remove the space
             length = len(word)
-            maxl = max(maxl,length)
+            self.maxl = max(self.maxl,length)
             self.addstr(word)
         print "Loading dictionary done."
         print "Total",entry_num, "entries."
         print "Maximum length of entry:",maxl
-        return maxl
+        return self.maxl
