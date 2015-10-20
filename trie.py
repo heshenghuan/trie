@@ -47,23 +47,26 @@ class Trie(object):
             return False
     
     def readDict(self, dictfile):
-        print "Loading dict data and building Trie Tree",
+        """
+        Reads a dictionary file to build a trie tree.
+        """
+        print "Loading dict data and building Trie Tree."
         input_data = codecs.open(dictfile, 'r', 'utf-8')
         entry_num = 0
+        maxl = 0
         for line in input_data.readlines():
             rawText = line.strip()
             if rawText == '':
                 continue
             else:
                 entry_num += 1
-            if entry_num%1000 == 0 and entry_num !=0:
-                print '.',
+            #if entry_num%1000 == 0 and entry_num !=0:
+                #print '.',
             word = rawText.split()[0]      #remove the space
-            #length = len(word)
+            length = len(word)
+            maxl = max(maxl,length)
             self.addstr(word)
-        print "\nLoading Corpus done."
-            
-if __name__ == '__main__':
-    trie = Trie()
-    trie.readDict(r'dictionary.txt')
-    print trie.search(u"埃博拉")
+        print "Loading dictionary done."
+        print "Total",entry_num, "entries."
+        print "Maximum length of entry:",maxl
+        return maxl
